@@ -10,6 +10,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    public function items(){
+        return $this->hasMany('App\Models\Item');
+    }
 
     /**
      * The attributes that are mass assignable.
