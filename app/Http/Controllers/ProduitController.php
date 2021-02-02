@@ -47,7 +47,10 @@ class ProduitController extends Controller
             "message" => "Product deleted"
         ], 201);
     }
-
+    public function getAll() {
+        $produits = Produit::get();
+        return response($produits, 200);
+    }
 
 
 }
