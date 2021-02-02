@@ -59,7 +59,7 @@ class ProduitController extends Controller
         $produit->quantity = $request->get('quantity');
 
         $image_path = public_path('uploads/products/'.$produit->image);
-        echo $image_path;
+
         if (file_exists($image_path))
         {
             File::delete($image_path);
@@ -77,6 +77,10 @@ class ProduitController extends Controller
         }
 
         $produit->update();
+        return response()->json([
+
+            "message" => "Product updated"
+        ], 201);
     }
 
 

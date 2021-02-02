@@ -11,7 +11,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     public function items(){
-        return $this->hasMany('App\Models\Item');
+        return $this->hasMany('App\Item');
     }
 
     /**

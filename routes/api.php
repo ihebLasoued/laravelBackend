@@ -22,6 +22,7 @@ Route::post('register', 'UserController@register');
 Route::delete('deleteProduct', 'ProduitController@delete');
 Route::get('allProduct', 'ProduitController@getAll');
 Route::post('updateProduct', 'ProduitController@update');
+Route::post('acheterProduct/{idUser}/{idProduct}', 'ItemController@acheterProduit');
 
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::post('addProduct', 'ProduitController@addProduct');
