@@ -51,6 +51,33 @@ class ProduitController extends Controller
         $produits = Produit::get();
         return response($produits, 200);
     }
+    public function  update (Request $request)
+    {
+        $produit=produit::find($request->get('id'));
+        $produit->label = $request->get('label');
+        $produit->prix = $request->get('prix');
+        $produit->quantity = $request->get('quantity');
+
+        $image_path = public_path('uploads/products/'.$produit->image);
+        echo $image_path;
+        if (file_exists($image_path))
+        {
+            File::delete($image_path);
+       }
+        if ($request->hasFile('image')){
+            $file=$request->file('image');
+            $extension=$file->getClientOriginalExtension();
+            $filename=time() .'.' .$extension;
+            $file->move('uploads/products/',$filename);
+            $produit->image=$filename;
+        }
+        else{
+            $produit->image='';
+
+        }
+
+        $produit->update();
+    }
 
 
 }

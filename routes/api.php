@@ -21,6 +21,7 @@ Route::post('login', 'UserController@login');
 Route::post('register', 'UserController@register');
 Route::delete('deleteProduct', 'ProduitController@delete');
 Route::get('allProduct', 'ProduitController@getAll');
+Route::post('updateProduct', 'ProduitController@update');
 
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::post('addProduct', 'ProduitController@addProduct');
