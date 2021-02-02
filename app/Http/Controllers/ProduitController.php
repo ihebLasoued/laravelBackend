@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Produit;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\File;
+
 class ProduitController extends Controller
 {
     public function addProduct(Request $request){
@@ -29,4 +31,23 @@ class ProduitController extends Controller
             "message" => "Product added"
         ], 201);
     }
+    public function  delete (Request $request)
+    {
+        $produit=produit::find($request->get('id'));
+
+        $image_path = public_path('uploads/products/'.$produit->image);
+        echo $image_path;
+        if (file_exists($image_path))
+        {
+            File::delete($image_path);
+       }
+        $produit->delete();
+        return response()->json([
+
+            "message" => "Product deleted"
+        ], 201);
+    }
+
+
+
 }
