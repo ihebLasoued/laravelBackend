@@ -4,39 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Produit;
 use Illuminate\Http\Request;
-
+use App\Repository\ProduitRepository;
 use Illuminate\Support\Facades\File;
 
 class ProduitController extends Controller
 {
+    public function __construct(ProduitRepository $produitRepository)
+    {
+        $this->produitRepository = $produitRepository;
+    }
+
     public function addProduct(Request $request){
-        $produit = new Produit();
-        $produit->label = $request->get('label');
-        $produit->prix = $request->get('prix');
-        $produit->quantity = $request->get('quantity');
-
-        if ($request->hasFile('image')){
-            $file=$request->file('image');
-            $extension=$file->getClientOriginalExtension();
-            $filename=time() .'.' .$extension;
-            $file->move('uploads/products/',$filename);
-            $produit->image=$filename;
-        }
-        else{
-            $produit->image='';
-        }
-        $produit->save();
-
-        return response()->json([
-            "message" => "Product added"
-        ], 201);
+        $this->produitRepository->addProduct( $request);
+       return response()->json([
+        "message" => "Product added"
+    ], 201);
     }
     public function  delete (Request $request)
     {
         $produit=produit::find($request->get('id'));
 
         $image_path = public_path('uploads/products/'.$produit->image);
-        echo $image_path;
         if (file_exists($image_path))
         {
             File::delete($image_path);
