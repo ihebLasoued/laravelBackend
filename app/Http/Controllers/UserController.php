@@ -23,6 +23,7 @@ public function login(Request $request)
     {
         $input = $request->only('email', 'password');
         $token = null;
+        $user= User::where('email', $request['email'])->first();
 
         if (!$token = JWTAuth::attempt($input)) {
             return response()->json([
@@ -34,6 +35,7 @@ public function login(Request $request)
         return response()->json([
             'success' => true,
             'token' => $token,
+            'user'=>$user
         ]);
     }
 
@@ -84,5 +86,19 @@ public function login(Request $request)
             'success'   =>  true,
             'data'      =>  $user
         ], 200);
+    }
+    public function getAllUsers() {
+        $users = User::get();
+        return response($users, 200);
+    }
+    public function  delete (Request $request)
+    {
+        $user=User::find($request->get('id'));
+
+        $user->delete();
+        return response()->json([
+
+            "message" => "User deleted"
+        ], 201);
     }
 }

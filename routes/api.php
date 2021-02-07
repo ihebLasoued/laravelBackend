@@ -17,8 +17,10 @@ use Illuminate\Support\Facades\Route;
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });*/
-Route::post('admin/login', 'UserController@login');
+Route::post('login', 'UserController@login');
 Route::post('register', 'UserController@register');
+Route::get('allUsers', 'UserController@getAllUsers');
+Route::post('deleteUser', 'UserController@delete');
 Route::post('deleteProduct', 'ProduitController@delete');
 Route::get('allProduct', 'ProduitController@getAll');
 Route::post('updateProduct', 'ProduitController@update');
