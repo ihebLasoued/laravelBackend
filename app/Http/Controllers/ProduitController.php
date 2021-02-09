@@ -71,5 +71,9 @@ class ProduitController extends Controller
         ], 201);
     }
 
-
+    public function getProductByid($id)
+{
+    $produit=produit::find($id);
+    return response($produit, 200);
+}
 }
