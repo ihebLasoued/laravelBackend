@@ -10,4 +10,8 @@ class produit extends Model
     {
         return $this->hasMany('App\Item');
     }
+    public function image()
+    {
+        return $this->hasOne('App\Image');
+    }
 }

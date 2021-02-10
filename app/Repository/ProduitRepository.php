@@ -14,16 +14,6 @@ class ProduitRepository{
         $produit->prix = $request->get('prix');
         $produit->quantity = $request->get('quantity');
 
-        if ($request->hasFile('image')){
-            $file=$request->file('image');
-            $extension=$file->getClientOriginalExtension();
-            $filename=time() .'.' .$extension;
-            $file->move('uploads/products/',$filename);
-            $produit->image=$filename;
-        }
-        else{
-            $produit->image='';
-        }
         $produit->save();
 
 
