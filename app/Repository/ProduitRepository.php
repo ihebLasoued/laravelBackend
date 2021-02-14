@@ -18,7 +18,15 @@ class ProduitRepository{
 
 
     }
-
+    public function getAllProducts ()
+    {
+     return   Produit::get();
+    }
+    public function  delete (Request $request)
+    {
+        $produit=produit::find($request->get('id'));
+        $produit->delete();
+    }
 
 
 }

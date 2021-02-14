@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 Route::post('login', 'UserController@login');
+Route::post('loginAdmin', 'AdminController@login');
+
 Route::post('register', 'UserController@register');
 Route::get('allUsers', 'UserController@getAllUsers');
 Route::post('deleteUser', 'UserController@delete');

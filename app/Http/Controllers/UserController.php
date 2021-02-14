@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Requests\RegistrationFormRequest;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -77,9 +78,10 @@ public function login(Request $request)
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
+        //Mail::to( $user->email)->send($user->nom);
 
         if ($this->loginAfterSignUp) {
-            return $this->login($request);
+            return $this->login($request)->sendEmailVerificationNotification();
         }
 
         return response()->json([

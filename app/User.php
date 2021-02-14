@@ -2,12 +2,13 @@
 
 namespace App;
 
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use Notifiable;
     public function items(){
@@ -58,4 +59,8 @@ class User extends Authenticatable implements JWTSubject
    {
        return [];
    }
+   public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail); // my notification
+    }
 }

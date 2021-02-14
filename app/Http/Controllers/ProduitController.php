@@ -22,21 +22,21 @@ class ProduitController extends Controller
     }
     public function  delete (Request $request)
     {
-        $produit=produit::find($request->get('id'));
 
-        $image_path = public_path('uploads/products/'.$produit->image);
+        $this->produitRepository->delete( $request);
+      /*  $image_path = public_path('uploads/products/'.$produit->image);
         if (file_exists($image_path))
         {
             File::delete($image_path);
-       }
-        $produit->delete();
+       }*/
+
         return response()->json([
 
             "message" => "Product deleted"
         ], 201);
     }
     public function getAll() {
-        $produits = Produit::get();
+        $produits =  $this->produitRepository->getAllProducts();
         return response($produits, 200);
     }
     public function  update (Request $request)
@@ -46,7 +46,7 @@ class ProduitController extends Controller
         $produit->prix = $request->get('prix');
         $produit->quantity = $request->get('quantity');
 
-        $image_path = public_path('uploads/products/'.$produit->image);
+        /*$image_path = public_path('uploads/products/'.$produit->image);
 
         if (file_exists($image_path))
         {
@@ -62,7 +62,7 @@ class ProduitController extends Controller
         else{
             $produit->image='';
 
-        }
+        }*/
 
         $produit->update();
         return response()->json([

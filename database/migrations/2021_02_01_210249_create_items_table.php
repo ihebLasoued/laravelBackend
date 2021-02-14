@@ -16,11 +16,11 @@ class CreateItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->increments('id', true);
             $table->string('quantity')->nullable();
-            $table->integer('user_id')->unsigned()->index()->nullable();
-            $table->integer('produit_id')->unsigned()->index()->nullable();
+            $table->integer('user_id')->unsigned()->index();
+            $table->integer('produit_id')->unsigned()->index();
             $table->foreign('user_id')
             ->references('id')
-            ->on('users');
+            ->on('users')->onDelete('cascade');
             $table->foreign('produit_id')
             ->references('id')
             ->on('produits')->onDelete('cascade');

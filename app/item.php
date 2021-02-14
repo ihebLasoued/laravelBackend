@@ -6,10 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class item extends Model
 {
-    public function user(){
+    protected $fillable = [
+        'label', 'user_id', 'produit_id'
+    ];
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
-    public function produit(){
+    public function produit()
+    {
         return $this->belongsTo('App\Produit');
     }
 }
