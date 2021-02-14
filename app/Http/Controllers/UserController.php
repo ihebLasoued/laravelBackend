@@ -7,11 +7,16 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Requests\RegistrationFormRequest;
+use App\Repository\UserRepository;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
-   /**
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+    /**
      * @var bool
      */
     public $loginAfterSignUp = true;
@@ -20,11 +25,11 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-public function login(Request $request)
+    public function login(Request $request)
     {
         $input = $request->only('email', 'password');
         $token = null;
-        $user= User::where('email', $request['email'])->first();
+        $user = User::where('email', $request['email'])->first();
 
         if (!$token = JWTAuth::attempt($input)) {
             return response()->json([
@@ -36,7 +41,7 @@ public function login(Request $request)
         return response()->json([
             'success' => true,
             'token' => $token,
-            'user'=>$user
+            'user' => $user
         ]);
     }
 
@@ -89,15 +94,14 @@ public function login(Request $request)
             'data'      =>  $user
         ], 200);
     }
-    public function getAllUsers() {
-        $users = User::get();
+    public function getAllUsers()
+    {
+        $users = $this->userRepository->getAllUsers();
         return response($users, 200);
     }
-    public function  delete (Request $request)
+    public function  delete(Request $request)
     {
-        $user=User::find($request->get('id'));
-
-        $user->delete();
+        $this->userRepository->delete();
         return response()->json([
 
             "message" => "User deleted"

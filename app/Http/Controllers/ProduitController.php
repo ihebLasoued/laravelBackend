@@ -41,30 +41,7 @@ class ProduitController extends Controller
     }
     public function  update (Request $request)
     {
-        $produit=produit::find($request->get('id'));
-        $produit->label = $request->get('label');
-        $produit->prix = $request->get('prix');
-        $produit->quantity = $request->get('quantity');
-
-        /*$image_path = public_path('uploads/products/'.$produit->image);
-
-        if (file_exists($image_path))
-        {
-            File::delete($image_path);
-       }
-        if ($request->hasFile('image')){
-            $file=$request->file('image');
-            $extension=$file->getClientOriginalExtension();
-            $filename=time() .'.' .$extension;
-            $file->move('uploads/products/',$filename);
-            $produit->image=$filename;
-        }
-        else{
-            $produit->image='';
-
-        }*/
-
-        $produit->update();
+        $this->produitRepository->update();
         return response()->json([
 
             "message" => "Product updated"
