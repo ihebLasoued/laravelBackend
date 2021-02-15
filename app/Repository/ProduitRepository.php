@@ -22,9 +22,9 @@ class ProduitRepository{
     {
      return   Produit::get();
     }
-    public function  delete (Request $request)
+    public function  delete ($id)
     {
-        $produit=produit::find($request->get('id'));
+        $produit=produit::find($id);
         $produit->delete();
     }
     public function  update (Request $request)
@@ -54,6 +54,11 @@ class ProduitRepository{
 
 
 
+    }
+    public function getProductById($id)
+    {
+        $produit = Produit::find($id);
+        return $produit;
     }
 
 

@@ -22,13 +22,9 @@ class ProduitController extends Controller
     }
     public function  delete (Request $request)
     {
+      $produit=  $this->produitRepository->getProductById($request->get('id'));
+        $this->produitRepository->delete( $produit);
 
-        $this->produitRepository->delete( $request);
-      /*  $image_path = public_path('uploads/products/'.$produit->image);
-        if (file_exists($image_path))
-        {
-            File::delete($image_path);
-       }*/
 
         return response()->json([
 
@@ -39,7 +35,7 @@ class ProduitController extends Controller
         $produits =  $this->produitRepository->getAllProducts();
         return response($produits, 200);
     }
-    public function  update (Request $request)
+    public function  update ()
     {
         $this->produitRepository->update();
         return response()->json([

@@ -101,10 +101,12 @@ class UserController extends Controller
     }
     public function  delete(Request $request)
     {
-        $this->userRepository->delete();
+       $user= $this->userRepository->getUserById($request->get('id'));
+       $this->userRepository->delete($user);
         return response()->json([
 
             "message" => "User deleted"
         ], 201);
     }
+
 }
