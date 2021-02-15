@@ -22,14 +22,14 @@ class ProduitRepository{
     {
      return   Produit::get();
     }
-    public function  delete ($id)
+    public function  delete ($produit)
     {
-        $produit=produit::find($id);
+
         $produit->delete();
     }
-    public function  update (Request $request)
+    public function  update ($produit,Request $request)
     {
-        $produit=produit::find($request->get('id'));
+
         $produit->label = $request->get('label');
         $produit->prix = $request->get('prix');
         $produit->quantity = $request->get('quantity');

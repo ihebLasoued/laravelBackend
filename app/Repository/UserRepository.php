@@ -13,9 +13,8 @@ class UserRepository
         $users = User::get();
         return $users;
     }
-    public function  delete($user_id)
+    public function  delete($user )
     {
-        $user = User::find($user_id);
 
         $user->delete();
 

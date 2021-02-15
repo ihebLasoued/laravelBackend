@@ -20,9 +20,9 @@ class ProduitController extends Controller
         "message" => "Product added"
     ], 201);
     }
-    public function  delete (Request $request)
+    public function  delete ($id)
     {
-      $produit=  $this->produitRepository->getProductById($request->get('id'));
+      $produit=  $this->produitRepository->getProductById($id);
         $this->produitRepository->delete( $produit);
 
 
@@ -35,9 +35,10 @@ class ProduitController extends Controller
         $produits =  $this->produitRepository->getAllProducts();
         return response($produits, 200);
     }
-    public function  update ()
+    public function  update ($id,Request $request)
     {
-        $this->produitRepository->update();
+        $produit=  $this->produitRepository->getProductById($id);
+        $this->produitRepository->update($produit,$request);
         return response()->json([
 
             "message" => "Product updated"

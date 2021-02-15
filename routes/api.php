@@ -22,10 +22,10 @@ Route::post('loginAdmin', 'AdminController@login');
 
 Route::post('register', 'UserController@register');
 Route::get('allUsers', 'UserController@getAllUsers');
-Route::post('deleteUser', 'UserController@delete');
-Route::post('deleteProduct', 'ProduitController@delete');
+Route::delete('deleteUser/{id}', 'UserController@delete');
+Route::delete('deleteProduct/{id}', 'ProduitController@delete');
 Route::get('allProduct', 'ProduitController@getAll');
-Route::post('updateProduct', 'ProduitController@update');
+Route::put('updateProduct/{id}', 'ProduitController@update');
 Route::post('addImage/{id}', 'ImageController@addImage');
 Route::get('Product/{id}', 'ProduitController@getProductByid');
 
