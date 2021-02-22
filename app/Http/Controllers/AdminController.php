@@ -21,4 +21,8 @@ class AdminController extends Controller
             'user'=>$user
         ]);
     }
+public function asselma()
+{
+echo "asselma";
+}
 }
