@@ -16,59 +16,27 @@ class UserController extends Controller
     {
         $this->userRepository = $userRepository;
     }
-    /**
-     * @var bool
-     */
-    public $loginAfterSignUp = true;
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function login(Request $request)
     {
-        $input = $request->only('email', 'password');
-        $token = null;
-        $user = User::where('email', $request['email'])->first();
-
-        if (!$token = JWTAuth::attempt($input)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid Email or Password',
-            ], 401);
-        }
+        $user = $this->userRepository->logout($request);
 
         return response()->json([
             'success' => true,
-            'token' => $token,
+
             'user' => $user
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Validation\ValidationException
-     */
+
     public function logout(Request $request)
     {
-        $this->validate($request, [
-            'token' => 'required'
-        ]);
-
-        try {
-            JWTAuth::invalidate($request->token);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'User logged out successfully'
-            ]);
-        } catch (JWTException $exception) {
+        $user = $this->userRepository->logout($request);
             return response()->json([
                 'success' => false,
                 'message' => 'Sorry, the user cannot be logged out'
             ], 500);
-        }
+
     }
 
     /**
@@ -77,17 +45,7 @@ class UserController extends Controller
      */
     public function register(RegistrationFormRequest $request)
     {
-        $user = new User();
-        $user->nom = $request->nom;
-        $user->prenom = $request->prenom;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save();
-        //Mail::to( $user->email)->send($user->nom);
-
-        if ($this->loginAfterSignUp) {
-            return $this->login($request)->sendEmailVerificationNotification();
-        }
+        $user = $this->userRepository->register($request);
 
         return response()->json([
             'success'   =>  true,
